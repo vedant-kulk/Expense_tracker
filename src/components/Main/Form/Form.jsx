@@ -5,6 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 import UseStyle from './style';
 import { incomeCategories,expenseCategories } from '../../../constants/category';
 import formatDate from '../../../utils/formatDate';
+import CustomizedSnackbar from '../../Snackbar/Snackbar';
 
 const initialState={
     amount:'',
@@ -16,18 +17,21 @@ const Form = () => {
     const classes=UseStyle();
     const [formData,setFormData]=useState(initialState);
     const {deleteTransaction,addTransaction}=useContext(ExpenseTrackerContext);
-
+    const [open,setOpen]=useState(false);
     const createTransaction=()=>{
         const transaction={...formData,amount:Number(formData.amount),id:uuidv4()};
+        setOpen(true);
         addTransaction(transaction);
+
         setFormData(initialState);
     }
     const selectedCategory=formData.type==="Income"?incomeCategories:expenseCategories;
   return (
     <Grid container spacint={2} >
+        <CustomizedSnackbar open={open} setOpen={setOpen}/>
         <Grid item xs={12}>
             <Typography align="center" varint="subtitle2" gutterBottom>
-                Try Saying
+                Daily add your expenses😁
             </Typography>
         </Grid>
         <Grid item xs={6}>
